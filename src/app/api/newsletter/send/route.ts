@@ -4,8 +4,10 @@ import { Resend } from 'resend'
 import { cookies } from 'next/headers'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 
-// Inicializa o Resend
-const resend = new Resend(process.env.RESEND_API_KEY)
+// Inicialização mais segura do Resend
+const resend = process.env.RESEND_API_KEY 
+  ? new Resend(process.env.RESEND_API_KEY)
+  : null;
 
 // Cliente Supabase para API
 const supabaseAdmin = createClient(
@@ -15,6 +17,15 @@ const supabaseAdmin = createClient(
 
 export async function POST(request: Request) {
   try {
+    // Verifica se o Resend está configurado
+    if (!resend) {
+      console.error('RESEND_API_KEY não está configurada')
+      return NextResponse.json(
+        { message: 'Configuração do email não está disponível' },
+        { status: 503 }
+      )
+    }
+
     console.log('🚀 Iniciando envio de newsletter...')
 
     // Verifica autenticação

@@ -2,20 +2,59 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
+    --background: #ffffff;
+    --background-secondary: #f8fafc;
+    --foreground: #171717;
+    --foreground-secondary: #374151;
+    
+    --primary-50: #f0fdf4;
+    --primary-100: #dcfce7;
+    --primary-200: #bbf7d0;
+    --primary-300: #86efac;
+    --primary-400: #4ade80;
+    --primary-500: #22c55e;
+    --primary-600: #16a34a;
+    --primary-700: #15803d;
+    --primary-800: #166534;
+    --primary-900: #14532d;
+  }
+
+  .dark {
     --background: #0a0a0a;
+    --background-secondary: #171717;
     --foreground: #ededed;
+    --foreground-secondary: #d1d5db;
+    
+    --primary-50: #0f1f14;
+    --primary-100: #132819;
+    --primary-200: #1a3821;
+    --primary-300: #204c2b;
+    --primary-400: #2b6638;
+    --primary-500: #358544;
+    --primary-600: #41a653;
+    --primary-700: #4cc85f;
+    --primary-800: #7ddb8c;
+    --primary-900: #a5edb0;
   }
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply bg-background text-foreground;
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary-600 text-white px-4 py-2 rounded-lg 
+           hover:bg-primary-700 transition-colors
+           dark:bg-primary-500 dark:hover:bg-primary-600
+           dark:text-white;
+  }
+  
+  .card {
+    @apply bg-white dark:bg-background-secondary
+           border border-gray-200 dark:border-gray-800
+           rounded-lg shadow-sm;
+  }
 }

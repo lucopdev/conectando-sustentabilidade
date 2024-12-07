@@ -1,19 +1,18 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
-import { Resend } from 'resend'
 import { cookies } from 'next/headers'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { getResendClient } from '@/lib/resend'
 
 // Cliente Supabase para API
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY! // Usa service role key para acesso total
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
 )
 
 export async function POST(request: Request) {
   try {
-    // Inicializa o Resend apenas quando a rota é chamada
-    const resend = new Resend(process.env.RESEND_API_KEY || 'dummy_key')
+    console.log('🚀 Iniciando envio de newsletter...')
 
     // Verifica autenticação
     const supabase = createServerComponentClient({ cookies })
@@ -24,14 +23,6 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { message: 'Não autorizado' },
         { status: 401 }
-      )
-    }
-
-    // Verifica se temos a chave do Resend
-    if (!process.env.RESEND_API_KEY) {
-      return NextResponse.json(
-        { message: 'Configuração de email não disponível' },
-        { status: 503 }
       )
     }
 
@@ -46,7 +37,7 @@ export async function POST(request: Request) {
       )
     }
 
-    // Busca todos os inscritos ativos
+    // Busca inscritos
     const { data: subscribers, error: fetchError } = await supabaseAdmin
       .from('subscribers')
       .select('email')
@@ -67,7 +58,9 @@ export async function POST(request: Request) {
 
     console.log(`📨 Enviando para ${subscribers.length} inscritos`)
 
-    // Envia para cada inscrito
+    const resend = getResendClient()
+
+    // Envia emails
     const results = await Promise.allSettled(
       subscribers.map(async (subscriber) => {
         try {
@@ -89,7 +82,7 @@ export async function POST(request: Request) {
       })
     )
 
-    // Registra o envio no Supabase
+    // Registra envio
     const sendLog = await supabaseAdmin
       .from('newsletter_sends')
       .insert([

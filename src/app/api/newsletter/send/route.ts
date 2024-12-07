@@ -60,6 +60,14 @@ export async function POST(request: Request) {
 
     const resend = getResendClient()
 
+    // Se estiver em build, retorna mock
+    if (process.env.NEXT_PHASE === 'build') {
+      return NextResponse.json({
+        message: 'Mock response during build',
+        success: true
+      })
+    }
+
     // Envia emails
     const results = await Promise.allSettled(
       subscribers.map(async (subscriber) => {

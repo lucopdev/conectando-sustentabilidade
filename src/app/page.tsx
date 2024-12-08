@@ -1,5 +1,5 @@
-import { Navigation } from '@/components/Navigation'
-import { NewsletterForm } from '@/components/NewsletterForm'
+import { Navigation } from '@/app/components/Navigation';
+import { NewsletterForm } from '@/app/components/NewsletterForm';
 
 export default function Home() {
   return (
@@ -12,8 +12,8 @@ export default function Home() {
             Newsletter para Consumo Consciente e Ação Climática
           </h2>
           <p className="text-foreground/80 max-w-2xl mx-auto text-sm md:text-base">
-            Junte-se a nossa comunidade para receber conteúdos educativos e práticos sobre sustentabilidade,
-            ação climática e consumo consciente.
+            Junte-se a nossa comunidade para receber conteúdos educativos e práticos sobre sustentabilidade, ação
+            climática e consumo consciente.
           </p>
         </section>
 
@@ -37,17 +37,11 @@ export default function Home() {
             <h3 className="text-xl font-bold text-primary-800 dark:text-primary-400 mb-2">
               ODS 12: Consumo Responsável
             </h3>
-            <p className="text-foreground/80">
-              Incentivando práticas de consumo consciente e sustentável.
-            </p>
+            <p className="text-foreground/80">Incentivando práticas de consumo consciente e sustentável.</p>
           </div>
           <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-            <h3 className="text-xl font-bold text-primary-800 dark:text-primary-400 mb-2">
-              ODS 13: Ação Climática
-            </h3>
-            <p className="text-foreground/80">
-              Mobilizando a comunidade para combater as mudanças climáticas.
-            </p>
+            <h3 className="text-xl font-bold text-primary-800 dark:text-primary-400 mb-2">ODS 13: Ação Climática</h3>
+            <p className="text-foreground/80">Mobilizando a comunidade para combater as mudanças climáticas.</p>
           </div>
         </section>
       </main>
@@ -60,5 +54,5 @@ export default function Home() {
         </div>
       </footer>
     </div>
-  )
+  );
 }

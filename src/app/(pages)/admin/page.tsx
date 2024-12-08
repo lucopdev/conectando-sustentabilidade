@@ -1,10 +1,10 @@
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { SubscribersList } from '@/components/SubscribersList';
-import { AdminHeader } from '@/components/AdminHeader';
-import { NewsletterComposer } from '@/components/NewsletterComposer';
-import { NewsletterHistory } from '@/components/NewsletterHistory';
+import { SubscribersList } from '@/app/components/SubscribersList';
+import { AdminHeader } from '@/app/components/AdminHeader';
+import { NewsletterComposer } from '@/app/components/NewsletterComposer';
+import { NewsletterHistory } from '@/app/components/NewsletterHistory';
 
 export default async function AdminPage() {
   const supabase = createServerComponentClient({ cookies });

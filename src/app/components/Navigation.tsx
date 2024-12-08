@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { ThemeToggle } from './ThemeToggle'
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
@@ -20,7 +21,7 @@ export function Navigation() {
   }
 
   return (
-    <header className="bg-primary-600 text-white p-6">
+    <header className="bg-primary-600 dark:bg-primary-800 text-white p-6">
       <div className="max-w-6xl mx-auto flex justify-between items-center">
         <Link href="/" className="text-2xl font-bold hover:text-primary-200 transition-colors">
           Conectando Sustentabilidade
@@ -87,6 +88,8 @@ export function Navigation() {
           >
             ODS
           </Link>
+          
+          <ThemeToggle />
           
           {/* Botões de Login/Admin e Logout */}
           {isAdminPage ? (
